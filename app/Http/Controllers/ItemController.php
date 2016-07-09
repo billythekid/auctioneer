@@ -25,9 +25,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::where('active', 1)->paginate(24);
-
-        return view('items.index', compact('items'));
+        return redirect('/');
     }
 
     /**
