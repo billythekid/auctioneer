@@ -8,7 +8,7 @@
                     <div class="panel-heading">Welcome</div>
 
                     <div class="panel-body" id="main-content">
-                        Your Application's Landing Page.
+                        Your Application's Landing Page. {{ str_random() }}
                     </div>
                 </div>
             </div>
