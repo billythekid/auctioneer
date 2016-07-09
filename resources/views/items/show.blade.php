@@ -81,7 +81,7 @@
                             @foreach($item->relatedItems() as $relatedItem)
                                 <div class="col-md-4">
                                     <a class='btn btn-primary' href="{{route('item.show', $relatedItem)}}">{{ $relatedItem->title }}
-                                        <span class="badge">£{{ item<?=$relatedItem->id?> }}</span>
+                                        <span class="badge indicator-item-{{$relatedItem->id}}">£{{ item<?=$relatedItem->id?> }}</span>
                                     </a>
                                 </div>
                             @endforeach
@@ -146,6 +146,7 @@
             @foreach($item->relatedItems() as $relatedItem)
             socket.on("bids-channel{{ $relatedItem->id }}:App\\Events\\BidReceived", function (data) {
                 this.item{{$relatedItem->id}} = parseFloat(data.currentTotal);
+                $('.indicator-item-{{$relatedItem->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
             }.bind(this));
             @endforeach
         }
