@@ -13,12 +13,15 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h2>Current Items</h2></div>
-                    <div class="panel-body">
+                    <div class="panel-heading">Welcome</div>
+
+                    <div class="panel-body" id="main-content">
                         {{ $items->links() }}
-                        @foreach($items as $item)
-                            <p><a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></p>
-                        @endforeach
+                        <div class="row">
+                            @foreach($items as $item)
+                                <div class="col-md-4"><a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></div>
+                            @endforeach
+                        </div>
                         {{ $items->links() }}
                     </div>
                 </div>
