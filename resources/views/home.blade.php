@@ -25,7 +25,9 @@
                         <div class="row">
                             @foreach($items as $item)
                                 <div class="col-md-4">
-                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></div>
+                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a>
+                                    <span class="badge">£{{ item<?=$item->id?> }}</span>
+                                </div>
                             @endforeach
                         </div>
                         {{ $items->links() }}
@@ -35,3 +37,26 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+<script>
+    var socket = io(':3000');
+    new Vue({
+        el: '#main-content',
+        data: {
+            @foreach($items as $item)
+            item{{$item->id}}: {{$item->currentBid()->amount ?? 0}},
+            @endforeach
+        },
+
+        ready: function () {
+            @foreach($items as $item)
+
+            socket.on("bids-channel{{ $item->id }}:App\\Events\\BidReceived", function (data) {
+                        this.item{{$item->id}} = parseFloat(data.currentTotal);
+            }.bind(this));
+            @endforeach
+        }
+    });
+</script>
+
+@endpush

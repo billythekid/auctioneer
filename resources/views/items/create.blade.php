@@ -13,9 +13,9 @@
                             {{ csrf_field() }}
                             <div class="form-group {{ $errors->has('categories') ? 'has-error' : '' }}">
                                 <label class="control-label" for="categories">Categories</label>
-                                <select name="categories" id="categories" class="form-control" multiple>
+                                <select name="categories[]" id="categories" class="form-control" multiple>
                                     @foreach( $categories as $category )
-                                        <option value="{{ $category->slug }}" {{ old('categories') == $category->slug ? 'selected' : '' }}>{{ $category->title }}</option>
+                                        <option value="{{ $category->id }}" {{ old('categories') == $category->slug ? 'selected' : '' }}>{{ $category->title }}</option>
                                     @endforeach
                                 </select>
                             </div>

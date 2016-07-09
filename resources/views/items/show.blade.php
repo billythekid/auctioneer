@@ -5,7 +5,12 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h1>{{ $item->title }}</h1></div>
+                    <div class="panel-heading">
+                        <h1>{{ $item->title }}</h1>
+                        @foreach($item->categories as $category)
+                            <span class="label {{ $category->slug }}">{{ $category->title }}</span>
+                        @endforeach
+                    </div>
 
                     <div class="panel-body" id="main-content">
                         <div class="row">

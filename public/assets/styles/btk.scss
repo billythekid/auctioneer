@@ -1,3 +1,27 @@
 .alert.current-bid {
-  transition: background-color 750ms cubic-bezier(0,1,0,1);
+  transition: background-color 750ms cubic-bezier(0, 1, 0, 1);
+}
+
+.label {
+  &.home-garden {
+background-color: brown;
+  }
+  &.leisure {
+    background-color: fuchsia;
+  }
+  &.gifts {
+    background-color: darkgreen;
+  }
+  &.kids {
+    background-color: olive;
+  }
+  &.technology {
+    background-color: yellowgreen;
+  }
+  &.reading{
+    background-color: darkorchid;
+  }
+  &.automotive {
+    background-color: royalblue;
+  }
 }

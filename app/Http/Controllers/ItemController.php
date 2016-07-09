@@ -56,13 +56,13 @@ class ItemController extends Controller
             'price'       => 'required|integer',
             'duration'    => 'required|integer|min:1|max:28',
         ]);
-
         $item              = Item::createFromTitle($request->title);
         $item->user_id     = $request->user()->id;
         $item->description = $request->description;
         $item->price       = $request->price;
         $item->end_time    = Carbon::now()->addDays($request->duration);
         $item->save();
+        $item->categories()->sync($request->categories);
 
         if ($request->ajax())
         {
@@ -71,7 +71,7 @@ class ItemController extends Controller
 
         session()->flash('success', "The item, {$item->title}, was successfully listed.");
 
-        return back();
+        return redirect()->route('item.show', $item);
     }
 
     /**
