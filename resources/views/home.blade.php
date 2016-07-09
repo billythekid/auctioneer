@@ -25,8 +25,9 @@
                         <div class="row">
                             @foreach($items as $item)
                                 <div class="col-md-4">
-                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a>
-                                    <span class="badge">£{{ item<?=$item->id?> }}</span>
+                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}
+                                        <span class="badge">£{{ item<?=$item->id?> }}</span>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
@@ -52,7 +53,7 @@
             @foreach($items as $item)
 
             socket.on("bids-channel{{ $item->id }}:App\\Events\\BidReceived", function (data) {
-                        this.item{{$item->id}} = parseFloat(data.currentTotal);
+                this.item{{$item->id}} = parseFloat(data.currentTotal);
             }.bind(this));
             @endforeach
         }
