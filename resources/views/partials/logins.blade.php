@@ -14,4 +14,10 @@
             <li>secret</li>
         </ul>
     </div>
+    <div class="col-xs-12">
+        <p>
+            Ideally, you can log in using one set of details then open an incognito window or a different browser and log in using
+            the other details to watch the live-updates on items.
+        </p>
+    </div>
 </div>
