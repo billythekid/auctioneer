@@ -14,7 +14,7 @@
                                     <p class="lead">£@{{ currentBid }}</p>
                                     <p>High Bidder: @{{ highBidder }}</p>
                                 </div>
-                                <p>{{ nl2br($item->description) }}</p>
+                                <p>{{ $item->description }}</p>
                                 <hr>
                                 <p>
                                     <small>Ends: {{ $item->end_time->toDayDateTimeString() }}
