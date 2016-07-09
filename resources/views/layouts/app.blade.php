@@ -42,7 +42,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ $title ?? 'Auctioneer' }}
+                {{ $title ?? 'Real Time Auction Test Site' }}
             </a>
         </div>
 
