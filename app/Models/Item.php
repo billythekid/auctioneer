@@ -70,5 +70,15 @@ class Item extends Model
         return $this->currentBid()->user->name ?? 'No High Bidder';
     }
 
+    public function relatedItems()
+    {
+        $categories = $this->categories->modelKeys();
+        $relatedPosts = Item::whereHas('categories', function ($q) use ($categories) {
+            $q->whereIn('categories.id', $categories);
+        })->where('id', '<>', $this->id)->get();
+
+        return $relatedPosts;
+
+    }
 
 }

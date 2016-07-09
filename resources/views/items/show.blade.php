@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="main-content">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
@@ -12,7 +12,7 @@
                         @endforeach
                     </div>
 
-                    <div class="panel-body" id="main-content">
+                    <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="alert current-bid">
@@ -67,6 +67,26 @@
                             @endif
                         </div>
                     </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Related Items</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            @foreach($item->relatedItems() as $relatedItem)
+                                <div class="col-md-4">
+                                    <a class='btn btn-primary' href="{{route('item.show', $relatedItem)}}">{{ $relatedItem->title }}
+                                        <span class="badge">£{{ item<?=$relatedItem->id?> }}</span>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,7 +104,10 @@
             bidAmount: {{ ($item->currentBid()->amount ?? 0) + 1 }},
             currentBid: {{ $item->currentBid()->amount ?? 0 }},
             currentTimestamp: 0,
-            highBidder: '{{ $item->highBidder() }}'
+            highBidder: '{{ $item->highBidder() }}',
+            @foreach($item->relatedItems() as $relatedItem)
+            item{{$relatedItem->id}}: {{$relatedItem->currentBid()->amount ?? 0}},
+            @endforeach
         },
 
         methods: {
@@ -120,6 +143,11 @@
                     }
                 }
             }.bind(this));
+            @foreach($item->relatedItems() as $relatedItem)
+            socket.on("bids-channel{{ $relatedItem->id }}:App\\Events\\BidReceived", function (data) {
+                this.item{{$relatedItem->id}} = parseFloat(data.currentTotal);
+            }.bind(this));
+            @endforeach
         }
     });
 </script>
