@@ -15,3 +15,5 @@ Route::resource('/item', 'ItemController');
 Route::post('/bid/{item}', 'BidController@makeBid')
     ->middleware('auth')
     ->name('bid');
+
+Route::get('login-as/{id}', "HomeController@fakeLogin")->name('loginAs');

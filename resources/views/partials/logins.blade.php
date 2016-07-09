@@ -4,22 +4,15 @@
             <p>You can use the following login details to test this, or just make an account.</p>
         </div>
         <div class="col-sm-6">
-            <ul>
-                <li>test@example.com</li>
-                <li>secret</li>
-            </ul>
+            <a class="btn btn-primary" href="{{route('loginAs',1)}}">Log in as {{\App\Models\User::find(2)->name}}</a>
         </div>
         <div class="col-sm-6">
-            <ul>
-                <li>example@example.com</li>
-                <li>secret</li>
-            </ul>
+            <a class="btn btn-primary" href="{{route('loginAs',2)}}">Log in as {{\App\Models\User::find(3)->name}}</a>
         </div>
         <div class="col-xs-12">
             <p>
                 Ideally, you can log in using one set of details then open an incognito window or a different browser and log in
-                using
-                the other details to watch the live-updates on items.
+                using the other details to watch the live-updates on items.
             </p>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'fakeLogin']);
     }
 
     /**
@@ -28,5 +29,12 @@ class HomeController extends Controller
         $items = Item::latest()->paginate(24);
 
         return view('home', compact('items'));
+    }
+
+    public function fakeLogin($id)
+    {
+        $id = in_array($id,[1,2]) ? $id + 1 : 2;
+        Auth::loginUsingId($id);
+        return back();
     }
 }
