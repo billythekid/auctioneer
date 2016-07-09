@@ -7,9 +7,14 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Dashboard</div>
                     <div class="panel-body">
-                        <p>
-                            <a href="{{route('item.create')}}">List a new item</a>
-                        </p>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>
+                                    <a href="{{route('item.create')}}">List a new item</a>
+                                </p>
+                            </div>
+                        </div>
+                        @include('partials.logins')
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -19,7 +24,8 @@
                         {{ $items->links() }}
                         <div class="row">
                             @foreach($items as $item)
-                                <div class="col-md-4"><a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></div>
+                                <div class="col-md-4">
+                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></div>
                             @endforeach
                         </div>
                         {{ $items->links() }}
