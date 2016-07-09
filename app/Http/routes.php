@@ -2,11 +2,7 @@
 
 use App\Events\UserSignedUp;
 
-Route::get('/', function ()
-{
-    event(new UserSignedUp(Request::query('name')));
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Route::auth();
 

@@ -8,7 +8,13 @@
                     <div class="panel-heading">Welcome</div>
 
                     <div class="panel-body" id="main-content">
-                        Your Application's Landing Page. {{ str_random() }}
+                        {{ $items->links() }}
+                        <div class="row">
+                            @foreach($items as $item)
+                                <div class="col-md-4"><a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}</a></div>
+                            @endforeach
+                        </div>
+                        {{ $items->links() }}
                     </div>
                 </div>
             </div>
