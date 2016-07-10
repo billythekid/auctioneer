@@ -1,5 +1,5 @@
 # Example Real-Time "Auction" Laravel App
-## Note: This is not a working auction site. It's an example of one way to use real-time websockets to notify users of your site that something's happened.
+### Note: This is not a working auction site. It's an example of one way to use real-time websockets to notify users of your site that something's happened.
 
 [Working example site](http://aberdeenwebsolutions.co.uk)
 
