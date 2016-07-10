@@ -1,11 +1,13 @@
 # Example "Auction" Laravel App
 
+[Working example site](http://aberdeenwebsolutions.co.uk)
+
 * Set up your .env file to suit your setup, create your DB table etc.
 * `composer install`
 * `php artisan migrate`
-* `npm install`
-* `node socket.js`
+* `npm install` - we pull in ioredis and socket.io node packages
 * `php artisan db:seed` - sets up your item categories
+* `node socket.js` - although you may want to run this using "forever" or something if you want to keep it running - up to you.
 
 Hit your site in the browser and set up 3 users (user 2 and 3 will be offered as auto-login accounts for playing with)
 To disable this functionality remove the `fakeLogin()` method from the HomeController or remove the last route(named `loginAs`) in routes.php
