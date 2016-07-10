@@ -2,7 +2,7 @@
 
 [Working example site](http://aberdeenwebsolutions.co.uk)
 
-* Set up your .env file to suit your setup, create your DB table etc.
+* Set up your .env file to suit your setup, create your DB etc. (don't change the things from redis that are set to redis)
 * `composer install`
 * `php artisan migrate`
 * `npm install` - we pull in ioredis and socket.io node packages
