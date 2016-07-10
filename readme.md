@@ -1,7 +1,7 @@
 # Example Real-Time "Auction" Laravel App
 ### Note: This is not a working auction site. It's an example of one way to use real-time websockets to notify users of your site that something's happened.
 
-[Working example site](http://aberdeenwebsolutions.co.uk)
+[Working example site](http://auctioneer.btk.scot)
 
 * Set up your .env file to suit your setup, create your DB etc. (don't change the things from redis that are set to redis)
 * `composer install`
