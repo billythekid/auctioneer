@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'billy@aberdeenwebsolutions.co.uk', 'name' => 'Billy Fagan'],
+    'from' => ['address' => env('MAIL_DEFAULT_FROM_ADDRESS',''), 'name' => env('MAIL_DEFAULT_FROM_NAME','')],
 
     /*
     |--------------------------------------------------------------------------
