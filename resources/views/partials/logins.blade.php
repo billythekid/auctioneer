@@ -20,6 +20,9 @@
                 Ideally, you can log in using one set of details then open an incognito window or a different browser and log in
                 using the other details to watch the live-updates on items.
             </p>
+            <p>
+                You can also make some duplicate tabs and see the "Users Online" number at the top change as you add and remove tabs.
+            </p>
         </div>
     </div>
 @endif

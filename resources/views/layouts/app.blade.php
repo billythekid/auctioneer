@@ -50,7 +50,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 {{--<li><a href="{{ url('/home') }}">Home</a></li>--}}
-                <li id="users-online"><p class="navbar-text"><span class="badge">@{{ usersOnline }}</span> Users Online</p></li>
+                <li id="users-online"><p class="navbar-text"><span v-cloak class="badge">@{{ usersOnline }}</span> Users Online</p></li>
             </ul>
 
             <!-- Right Side Of Navbar -->

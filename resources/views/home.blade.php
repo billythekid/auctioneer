@@ -27,7 +27,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <a class='btn btn-primary form-control' href="{{route('item.show', $item)}}">{{ $item->title }}
-                                            <span class="badge indicator-item-{{$item->id}}">£{{ item<?=$item->id?> }}</span>
+                                            <span class="badge indicator-item-{{$item->id}}" >£{{ item<?=$item->id?> }}</span>
                                         </a>
                                     </div>
                                 </div>
