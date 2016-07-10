@@ -50,6 +50,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 {{--<li><a href="{{ url('/home') }}">Home</a></li>--}}
+                <li id="users-online"><p class="navbar-text"><span class="badge">@{{ usersOnline }}</span> Users Online</p></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -89,7 +90,23 @@
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-
+<script>
+    var socket = io(':3000');
+</script>
 @stack('scripts')
+<script>
+    new Vue({
+        el: '#users-online',
+        data: {
+            usersOnline: 1
+        },
+        ready: function () {
+            socket.on('visitorsConnected', function (data) {
+                this.usersOnline = data;
+            }.bind(this));
+        }
+    });
+</script>
+
 </body>
 </html>

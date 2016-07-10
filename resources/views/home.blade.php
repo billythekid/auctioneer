@@ -42,7 +42,6 @@
 @endsection
 @push('scripts')
 <script>
-    var socket = io(':3000');
     new Vue({
         el: '#main-content',
         data: {
@@ -58,7 +57,12 @@
                 this.item{{$item->id}} = parseFloat(data.currentTotal);
                 $('.indicator-item-{{$item->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
             }.bind(this));
+
             @endforeach
+
+            socket.on('visitorsConnected', function(data){
+                console.log(data);
+            });
         }
     });
 </script>

@@ -98,7 +98,6 @@
 @push('scripts')
 <script>
     var channel = "bids-channel{{ $item->id }}";
-    var socket = io(':3000');
     new Vue({
         el: '#main-content',
 
