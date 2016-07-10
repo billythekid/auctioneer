@@ -4,10 +4,16 @@
             <p>You can use the following login details to test this, or just make an account.</p>
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-primary form-control" href="{{route('loginAs',1)}}">Log in as {{\App\Models\User::find(2)->name ?? 'NO 2nd USER SET YET'}}</a>
+            <div class="form-group">
+                <a class="btn btn-primary form-control" href="{{route('loginAs',1)}}">Log in
+                    as {{\App\Models\User::find(2)->name ?? 'NO 2nd USER SET YET'}}</a>
+            </div>
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-primary form-control" href="{{route('loginAs',2)}}">Log in as {{\App\Models\User::find(3)->name ?? 'NO 3rd USER SET YET'}}</a>
+            <div class="form-group">
+                <a class="btn btn-primary form-control" href="{{route('loginAs',2)}}">Log in
+                    as {{\App\Models\User::find(3)->name ?? 'NO 3rd USER SET YET'}}</a>
+            </div>
         </div>
         <div class="col-xs-12">
             <p>
