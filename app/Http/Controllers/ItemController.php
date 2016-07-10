@@ -57,7 +57,7 @@ class ItemController extends Controller
         $item              = Item::createFromTitle($request->title);
         $item->user_id     = $request->user()->id;
         $item->description = $request->description;
-        $item->price       = $request->price;
+        $item->price       = $request->price; //TODO use this for something? Buy it now maybe.
         $item->end_time    = Carbon::now()->addDays($request->duration);
         $item->save();
         $item->categories()->sync($request->categories);

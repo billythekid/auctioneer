@@ -73,8 +73,8 @@ class Item extends Model
     public function relatedItems()
     {
         $categories = $this->categories->modelKeys();
-        $relatedPosts = Item::whereHas('categories', function ($q) use ($categories) {
-            $q->whereIn('categories.id', $categories);
+        $relatedPosts = Item::whereHas('categories', function ($query) use ($categories) {
+            $query->whereIn('categories.id', $categories);
         })->where('id', '<>', $this->id)->get();
 
         return $relatedPosts;

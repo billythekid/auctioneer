@@ -1,27 +1,23 @@
-# Laravel PHP Framework
+# Example "Auction" Laravel App
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+* Set up your .env file to suit your setup, create your DB table etc.
+* `composer install`
+* `php artisan migrate`
+* `npm install`
+* `node socket.js`
+* `php artisan db:seed` - sets up your item categories
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Hit your site in the browser and set up 3 users (user 2 and 3 will be offered as auto-login accounts for playing with)
+To disable this functionality remove the `fakeLogin()` method from the HomeController or remove the last route(named `loginAs`) in routes.php
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+You can then add some items as you please and play around with how it ties together.
 
-## Official Documentation
+### The files of interest are:
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+* `resources/views/layouts/app.blade.php` - this pulls in socket.io from a cdn, you'll need socket.io for this to work.
+* `resource/views/items/show.blade.php` and `resource/views/home.blade.php` - particularly at the bottom where these files push to the scripts stack. This is where the listening for events takes place.
+* `socket.js` this script runs your node server and sets up all the websockets and redis stuff.
+* `app/Controllers/BidController.php` - accepts bids and broadcasts them to redis
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The socket.js file listens for anything on the `bids-channel` channel and requires a `data.item_id` property be passed in from the server. It then emits (pushes) messages to the listeners on that `bids-channel[item_id]` channel.
+(see the data we send in `app/Events/BidReceived.php` - Laravel pushes any public properties on an event as part of the data object) This allows us to use one server-side socket to listen for broadcasts but emit to different channels on the client end.
