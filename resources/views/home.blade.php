@@ -25,9 +25,11 @@
                         <div class="row">
                             @foreach($items as $item)
                                 <div class="col-md-4">
-                                    <a class='btn btn-primary' href="{{route('item.show', $item)}}">{{ $item->title }}
-                                        <span class="badge indicator-item-{{$item->id}}">£{{ item<?=$item->id?> }}</span>
-                                    </a>
+                                    <div class="form-group">
+                                        <a class='btn btn-primary form-control' href="{{route('item.show', $item)}}">{{ $item->title }}
+                                            <span class="badge indicator-item-{{$item->id}}">£{{ item<?=$item->id?> }}</span>
+                                        </a>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>

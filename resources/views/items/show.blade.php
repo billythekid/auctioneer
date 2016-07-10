@@ -80,9 +80,11 @@
                         <div class="row">
                             @foreach($item->relatedItems() as $relatedItem)
                                 <div class="col-md-4">
-                                    <a class='btn btn-primary' href="{{route('item.show', $relatedItem)}}">{{ $relatedItem->title }}
-                                        <span class="badge indicator-item-{{$relatedItem->id}}">£{{ item<?=$relatedItem->id?> }}</span>
-                                    </a>
+                                    <div class="form-group">
+                                        <a class='btn btn-primary form-control' href="{{route('item.show', $relatedItem)}}">{{ $relatedItem->title }}
+                                            <span class="badge indicator-item-{{$relatedItem->id}}">£{{ item<?=$relatedItem->id?> }}</span>
+                                        </a>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
