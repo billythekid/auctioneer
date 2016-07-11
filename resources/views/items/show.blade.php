@@ -15,7 +15,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="alert current-bid">
+                                <div class="alert @{{ updated ? 'alert-success':'' }}">
                                     <p class="lead">£@{{ currentBid }}</p>
                                     <p>High Bidder: @{{ highBidder }}</p>
                                 </div>
@@ -97,7 +97,6 @@
 
 @push('scripts')
 <script>
-    var channel = "bids-channel{{ $item->id }}";
     new Vue({
         el: '#main-content',
 
@@ -106,6 +105,7 @@
             currentBid: {{ $item->currentBid()->amount ?? 0 }},
             currentTimestamp: 0,
             highBidder: '{{ $item->highBidder() }}',
+            updated: false,
             @foreach($item->relatedItems() as $relatedItem)
             item{{$relatedItem->id}}: {{$relatedItem->currentBid()->amount ?? 0}},
             @endforeach
@@ -129,19 +129,16 @@
         },
 
         ready: function () {
-            socket.on(channel + ":App\\Events\\BidReceived", function (data) {
-                if (data.item_id == {{ $item->id }} ) {
-                    var newBid = parseFloat(data.currentTotal);
-                    if (newBid > this.currentBid) {
-                        this.currentBid = newBid;
-                        this.currentTimestamp = data.timestamp;
-                        this.highBidder = data.highBidder;
-
-                        $('.current-bid').addClass('alert-success');
-                        setTimeout(function () {
-                            $('.current-bid').removeClass('alert-success');
-                        }, 350);
-                    }
+            socket.on("bids-channel{{ $item->id }}:App\\Events\\BidReceived", function (data) {
+                var newBid = parseFloat(data.currentTotal);
+                if (newBid > this.currentBid) {
+                    this.currentBid = newBid;
+                    this.currentTimestamp = data.timestamp;
+                    this.highBidder = data.highBidder;
+                    this.updated = true;
+                    setTimeout(function () {
+                        this.updated = false;
+                    }.bind(this), 350);
                 }
             }.bind(this));
             @foreach($item->relatedItems() as $relatedItem)
