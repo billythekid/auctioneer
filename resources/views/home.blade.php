@@ -70,9 +70,6 @@
 
             @endforeach
 
-            socket.on('visitorsConnected', function (data) {
-                console.log(data);
-            });
         }
     });
 </script>
