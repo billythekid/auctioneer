@@ -23,15 +23,13 @@
                     <div class="panel-body" id="main-content">
                         {{ $items->links() }}
                         <div class="row">
-                            @foreach($items as $item)
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <a class='btn btn-primary form-control' href="{{route('item.show', $item)}}">{{ $item->title }}
-                                            <span class="badge indicator-item-{{$item->id}}" >£{{ item<?=$item->id?> }}</span>
-                                        </a>
-                                    </div>
+                            <div v-for="item in items" class="col-md-4" v-cloak>
+                                <div class="form-group">
+                                    <a class='btn btn-primary form-control' href="@{{item.link}}">@{{item.title}}
+                                        <span class="badge @{{ item.itemClass }}">£@{{item.price}}</span>
+                                    </a>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                         {{ $items->links() }}
                     </div>
@@ -45,9 +43,17 @@
     new Vue({
         el: '#main-content',
         data: {
-            @foreach($items as $item)
-            item{{$item->id}}: {{$item->currentBid()->amount ?? 0}},
-            @endforeach
+            items: [
+                    @foreach($items as $item)
+                {
+                    id: '{{ $item->id }}',
+                    title: '{{ $item->title }}',
+                    price: '{{ $item->currentBid()->amount ?? 0}}',
+                    link: '{{ route('item.show', $item) }}',
+                    itemClass: "indicator-item-{{$item->id}}",
+                },
+                @endforeach
+            ]
         },
 
         ready: function () {
@@ -60,11 +66,12 @@
 
             @endforeach
 
-            socket.on('visitorsConnected', function(data){
+            socket.on('visitorsConnected', function (data) {
                 console.log(data);
             });
         }
-    });
+    })
+    ;
 </script>
 
 @endpush
