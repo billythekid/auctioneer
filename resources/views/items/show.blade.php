@@ -78,15 +78,13 @@
                     <div class="panel-heading">Related Items</div>
                     <div class="panel-body">
                         <div class="row">
-                            @foreach($item->relatedItems() as $relatedItem)
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <a class='btn btn-primary form-control' href="{{route('item.show', $relatedItem)}}">{{ $relatedItem->title }}
-                                            <span class="badge indicator-item-{{$relatedItem->id}}">£{{ item<?=$relatedItem->id?> }}</span>
-                                        </a>
-                                    </div>
+                            <div v-for="relatedItem in relatedItems" class="col-md-4" v-cloak>
+                                <div class="form-group">
+                                    <a class='btn btn-primary form-control' href="@{{ relatedItem.link }}">@{{ relatedItem.title }}
+                                        <span class="badge indicator-item-@{{relatedItem.id}}">£@{{ relatedItem.currentBid }}</span>
+                                    </a>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,9 +104,16 @@
             currentTimestamp: 0,
             highBidder: '{{ $item->highBidder() }}',
             updated: false,
-            @foreach($item->relatedItems() as $relatedItem)
-            item{{$relatedItem->id}}: {{$relatedItem->currentBid()->amount ?? 0}},
-            @endforeach
+            relatedItems: [
+                    @foreach($item->relatedItems() as $relatedItem)
+                {
+                    id: {{$relatedItem->id}},
+                    title: '{{$relatedItem->title}}',
+                    link: '{{route('item.show', $relatedItem)}}',
+                    currentBid: {{$relatedItem->currentBid()->amount ?? 0}},
+                },
+                @endforeach
+            ]
         },
 
         methods: {
@@ -143,8 +148,13 @@
             }.bind(this));
             @foreach($item->relatedItems() as $relatedItem)
             socket.on("bids-channel{{ $relatedItem->id }}:App\\Events\\BidReceived", function (data) {
-                this.item{{$relatedItem->id}} = parseFloat(data.currentTotal);
-                $('.indicator-item-{{$relatedItem->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                var relatedItem = this.relatedItems.find(function (item) {
+                    return item.id === {{ $relatedItem->id }};
+                });
+                if (parseInt(data.currentTotal) > relatedItem.currentBid) {
+                    relatedItem.currentBid = data.currentTotal;
+                    $('.indicator-item-{{$relatedItem->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                }
             }.bind(this));
             @endforeach
         }
