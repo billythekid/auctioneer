@@ -153,7 +153,7 @@
                 });
                 if (parseInt(data.currentTotal) > relatedItem.currentBid) {
                     relatedItem.currentBid = data.currentTotal;
-                    $('.indicator-item-{{$relatedItem->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                    $('.indicator-item-{{$relatedItem->id}}').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
                 }
             }.bind(this));
             @endforeach

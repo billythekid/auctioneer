@@ -46,7 +46,7 @@
             items: [
                     @foreach($items as $item)
                 {
-                    id: '{{ $item->id }}',
+                    id: {{ $item->id }},
                     title: '{{ $item->title }}',
                     price: '{{ $item->currentBid()->amount ?? 0}}',
                     link: '{{ route('item.show', $item) }}',
@@ -58,10 +58,14 @@
 
         ready: function () {
             @foreach($items as $item)
-
             socket.on("bids-channel{{ $item->id }}:App\\Events\\BidReceived", function (data) {
-                this.item{{$item->id}} = parseFloat(data.currentTotal);
-                $('.indicator-item-{{$item->id}}').fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                var item = this.items.find(function (item) {
+                    return item.id === {{ $item->id }};
+                });
+                if (parseInt(data.currentTotal) > item.price) {
+                    item.price = data.currentTotal;
+                    $('.indicator-item-{{$item->id}}').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                }
             }.bind(this));
 
             @endforeach
