@@ -20,7 +20,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="alert @{{ updated ? 'alert-success':'' }}">
+                                <div class="alert @{{ updated ? 'alert-success':'' }}" v-cloak>
                                     <p class="lead">£@{{ currentBid }}</p>
                                     <p>{{ $item->hasEnded() ? 'Winning' : 'High'}} Bidder: @{{ highBidder }}</p>
                                 </div>
@@ -35,7 +35,7 @@
                             </div>
                             @if(Auth::check() && !$item->hasEnded())
                                 <div class="col-sm-4">
-                                    <div class="quick-bids">
+                                    <div class="quick-bids" v-cloak>
                                         <h3>Quick Bid</h3>
                                         <p>
                                             <button class="btn btn-primary form-control" @click="bid(1)">Bid
@@ -77,13 +77,13 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="relatedItems.length > 0" v-cloak>
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Related Items</div>
                     <div class="panel-body">
                         <div class="row">
-                            <div v-for="relatedItem in relatedItems" class="col-md-4" v-cloak>
+                            <div v-for="relatedItem in relatedItems" class="col-md-4">
                                 <div class="form-group">
                                     <a class='btn btn-primary form-control' href="@{{ relatedItem.link }}">@{{ relatedItem.title }}
                                         <span class="badge indicator-item-@{{relatedItem.id}}">£@{{ relatedItem.currentBid }}</span>

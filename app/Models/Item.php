@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
@@ -45,43 +48,39 @@ class Item extends Model
         return $item;
     }
 
-    public function getPriceAttribute($value)
-    {
-        return number_format($value / 100, 2);
-    }
 
-
-    public function categories()
+    public function categories() : BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
-    public function bids()
+    public function bids() : HasMany
     {
         return $this->hasMany(Bid::class);
     }
 
-    public function currentBid()
+    public function currentBid() : Bid
     {
         return $this->bids()->orderBy('amount', 'desc')->first();
     }
 
-    public function highBidder()
+    public function highBidder() : string
     {
         return $this->currentBid()->user->name ?? 'No High Bidder';
     }
 
-    public function relatedItems()
+    public function relatedItems() : Collection
     {
-        $categories = $this->categories->modelKeys();
-        $relatedItems = Item::whereHas('categories', function ($query) use ($categories) {
+        $categories   = $this->categories->modelKeys();
+        $relatedItems = Item::whereHas('categories', function ($query) use ($categories)
+        {
             $query->whereIn('categories.id', $categories);
-        })->where('id', '<>', $this->id)->where('end_time','>',Carbon::now())->get();
+        })->where('id', '<>', $this->id)->where('end_time', '>', Carbon::now())->get();
 
         return $relatedItems;
     }
 
-    public function hasEnded()
+    public function hasEnded() : bool
     {
         return ($this->end_time < Carbon::now());
     }
