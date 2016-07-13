@@ -23,12 +23,11 @@
                                 <hr>
                                 <p>
                                     <small>Ends: {{ $item->end_time->toDayDateTimeString() }}
-                                        ({{ $item->end_time->diffinDays() . ' ' . str_plural('day',$item->end_time->diffinDays()) }}
-                                        from now)
+                                        ({{ !$item->hasEnded() ? $item->end_time->diffinDays() . ' ' . str_plural('day',$item->end_time->diffinDays()) . 'from now' : 'Ended ' . $item->end_time->diffForHumans() }})
                                     </small>
                                 </p>
                             </div>
-                            @if(Auth::check())
+                            @if(Auth::check() && !$item->hasEnded())
                                 <div class="col-sm-4">
                                     <div class="quick-bids">
                                         <h3>Quick Bid</h3>

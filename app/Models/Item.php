@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -78,7 +79,10 @@ class Item extends Model
         })->where('id', '<>', $this->id)->get();
 
         return $relatedPosts;
-
     }
 
+    public function hasEnded()
+    {
+        return ($this->end_time < Carbon::now());
+    }
 }
