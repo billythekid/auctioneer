@@ -17,10 +17,10 @@
                         @include('partials.logins')
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">Welcome</div>
+                <div class="panel panel-default" id="main-content">
+                    <div class="panel-heading">Current Listings</div>
 
-                    <div class="panel-body" id="main-content">
+                    <div class="panel-body">
                         {{ $items->links() }}
                         <div class="row">
                             <div v-for="item in items" class="col-md-4" v-cloak>
@@ -33,6 +33,22 @@
                         </div>
                         {{ $items->links() }}
                     </div>
+
+                    <div class="panel-heading">Recently Ended</div>
+                    <div class="panel-body" id="ended-items">
+                        {{ $endedItems->links() }}
+                        <div class="row">
+                            <div v-for="item in endedItems" class="col-md-4" v-cloak>
+                                <div class="form-group">
+                                    <a class='btn btn-warning form-control' href="@{{item.link}}">@{{item.title}}
+                                        <span class="badge @{{ item.itemClass }}">£@{{item.price}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{ $endedItems->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -45,6 +61,17 @@
         data: {
             items: [
                     @foreach($items as $item)
+                {
+                    id: {{ $item->id }},
+                    title: '{{ $item->title }}',
+                    price: '{{ $item->currentBid()->amount ?? 0}}',
+                    link: '{{ route('item.show', $item) }}',
+                    itemClass: "indicator-item-{{$item->id}}",
+                },
+                @endforeach
+            ],
+            endedItems: [
+                    @foreach($endedItems as $item)
                 {
                     id: {{ $item->id }},
                     title: '{{ $item->title }}',

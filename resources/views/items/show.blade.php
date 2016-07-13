@@ -6,7 +6,12 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h1>{{ $item->title }}</h1>
+                        <h1>
+                            {{ $item->title }}
+                            @if($item->hasEnded())
+                                <small>Auction ended</small>
+                            @endif
+                        </h1>
                         @foreach($item->categories as $category)
                             <span class="label {{ $category->slug }}">{{ $category->title }}</span>
                         @endforeach
@@ -17,13 +22,14 @@
                             <div class="col-sm-8">
                                 <div class="alert @{{ updated ? 'alert-success':'' }}">
                                     <p class="lead">£@{{ currentBid }}</p>
-                                    <p>High Bidder: @{{ highBidder }}</p>
+                                    <p>{{ $item->hasEnded() ? 'Winning' : 'High'}} Bidder: @{{ highBidder }}</p>
                                 </div>
                                 <p>{{ $item->description }}</p>
                                 <hr>
                                 <p>
                                     <small>Ends: {{ $item->end_time->toDayDateTimeString() }}
-                                        ({{ !$item->hasEnded() ? $item->end_time->diffinDays() . ' ' . str_plural('day',$item->end_time->diffinDays()) . 'from now' : 'Ended ' . $item->end_time->diffForHumans() }})
+                                        ({{ !$item->hasEnded() ? $item->end_time->diffinDays() . ' ' . str_plural('day',$item->end_time->diffinDays()) . 'from now' : 'Ended ' . $item->end_time->diffForHumans() }}
+                                        )
                                     </small>
                                 </p>
                             </div>

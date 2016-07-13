@@ -74,11 +74,11 @@ class Item extends Model
     public function relatedItems()
     {
         $categories = $this->categories->modelKeys();
-        $relatedPosts = Item::whereHas('categories', function ($query) use ($categories) {
+        $relatedItems = Item::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);
-        })->where('id', '<>', $this->id)->get();
+        })->where('id', '<>', $this->id)->where('end_time','>',Carbon::now())->get();
 
-        return $relatedPosts;
+        return $relatedItems;
     }
 
     public function hasEnded()
