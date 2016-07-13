@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -21,16 +22,30 @@ class Item extends Model
         'end_time', 'deleted_at',
     ];
 
+    /**
+     * Define what our unique thing is when we implicitly bind a route param to the model
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     * The user who created this listing
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Named constructor which takes the title and creates the title and slug parameters
+     * of the item. This avoids slug duplication.
+     * @param string $title
+     * @return static
+     */
     public static function createFromTitle(string $title)
     {
         $item        = new static;
@@ -49,26 +64,46 @@ class Item extends Model
     }
 
 
+    /**
+     * The categories this item belongs to.
+     * @return BelongsToMany
+     */
     public function categories() : BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
+    /**
+     * All bids that have been placed on this item.
+     * @return HasMany
+     */
     public function bids() : HasMany
     {
         return $this->hasMany(Bid::class);
     }
 
+    /**
+     * The highest bid by bid amount.
+     * @return Bid
+     */
     public function currentBid() : Bid
     {
         return $this->bids()->orderBy('amount', 'desc')->first();
     }
 
+    /**
+     * The user name of the user who placed the highest bid.
+     * @return string
+     */
     public function highBidder() : string
     {
         return $this->currentBid()->user->name ?? 'No High Bidder';
     }
 
+    /**
+     * Other items that have not yet ended that share a category with this item.
+     * @return Collection
+     */
     public function relatedItems() : Collection
     {
         $categories   = $this->categories->modelKeys();
@@ -80,6 +115,10 @@ class Item extends Model
         return $relatedItems;
     }
 
+    /**
+     * Has this item's listing ended meaning is it now later than the item's end time.
+     * @return bool
+     */
     public function hasEnded() : bool
     {
         return ($this->end_time < Carbon::now());
