@@ -66,7 +66,7 @@ class Item extends Model
      * The categories this item belongs to.
      * @return BelongsToMany
      */
-    public function categories() : BelongsToMany
+    public function categories()
     {
         return $this->belongsToMany(Category::class);
     }
@@ -75,7 +75,7 @@ class Item extends Model
      * All bids that have been placed on this item.
      * @return HasMany
      */
-    public function bids() : HasMany
+    public function bids()
     {
         return $this->hasMany(Bid::class);
     }
@@ -84,16 +84,16 @@ class Item extends Model
      * The highest bid by bid amount.
      * @return Bid
      */
-    public function currentBid() : Bid
+    public function currentBid()
     {
-        return $this->bids()->orderBy('amount', 'desc')->first();
+        return $this->bids()->orderBy('amount', 'desc')->first() ;
     }
 
     /**
      * The user name of the user who placed the highest bid.
      * @return string
      */
-    public function highBidder() : string
+    public function highBidder()
     {
         return $this->currentBid()->user->name ?? 'No High Bidder';
     }
@@ -102,7 +102,7 @@ class Item extends Model
      * Other items that have not yet ended that share a category with this item.
      * @return Collection
      */
-    public function relatedItems() : Collection
+    public function relatedItems()
     {
         $categories   = $this->categories->modelKeys();
         $relatedItems = Item::whereHas('categories', function ($query) use ($categories)
@@ -117,7 +117,7 @@ class Item extends Model
      * Has this item's listing ended meaning is it now later than the item's end time.
      * @return bool
      */
-    public function hasEnded() : bool
+    public function hasEnded()
     {
         return ($this->end_time < Carbon::now());
     }
