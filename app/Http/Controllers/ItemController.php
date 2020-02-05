@@ -72,23 +72,24 @@ class ItemController extends Controller
         return redirect()->route('item.show', $item);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Display the specified resource.
+   *
+   * @param Item $item
+   * @return \Illuminate\Http\Response
+   */
     public function show(Item $item)
     {
         return view('items.show', compact('item'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param Item $item
+   * @return \Illuminate\Http\Response
+   * @throws \Illuminate\Auth\Access\AuthorizationException
+   */
     public function edit(Item $item)
     {
         $this->authorize($item);
@@ -96,24 +97,24 @@ class ItemController extends Controller
         return view('items.edit', compact('item'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param \Illuminate\Http\Request $request
+   * @param Item                     $item
+   * @return void
+   */
     public function update(Request $request, Item $item)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param Item $item
+   * @return void
+   */
     public function destroy(Item $item)
     {
         //
