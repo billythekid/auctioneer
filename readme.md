@@ -1,4 +1,6 @@
-# Example Real-Time "Auction" Laravel (5.2) App
+# This project is now archived - feel free to use it as an example as per "[The files of interest](#the-files-of-interest-are)" below but please do not use this on a live environment due to security issues with Laravel 5.2
+
+## Example Real-Time "Auction" Laravel (5.2) App
 ### Note: This is not a working auction site. It's an example of one way to use real-time websockets to notify users of your site that something's happened.
 
 [Working example site](http://auctioneer.btk.scot) (If this isn't updating it's because I've forgot to restart socket.js - hit me up and I'll restart it)
